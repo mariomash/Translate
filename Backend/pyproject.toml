@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "Backend"
+version = "0.1.0"
+description = ""
+authors = ["Mario Luanco <mario@luanco.info>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.63.0"
+uvicorn = "^0.13.3"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+mypy = "^0.800"
+flake8 = "^3.8.4"
+autoflake = "^1.4"
+isort = "^5.7.0"
+black = "^20.8b1"
+google-trans-new = "^1.1.9"
+requests = "^2.25.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
