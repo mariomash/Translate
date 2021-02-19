@@ -1,0 +1,76 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body,
+app-root,
+app-translate {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+h1 {
+  width: 100%;
+  text-align: center;
+  margin: 20px !important;
+  font-weight: 100 !important;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: 1em !important;
+  font-weight: 100 !important;
+  margin: 2px !important;
+  color: #999;
+  display: block;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+app-translate {
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
+  text-align: center;
+  justify-content: center;
+}
+
+.main-translator-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  form {
+    width: 100%;
+    .translate-items {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      .translate-item {
+        width: 100%;
+        max-width: 400px;
+        display: block;
+        background-color: #fafaff;
+        border: solid 1px #e0e0f0;
+        margin: 10px;
+        padding: 10px;
+        border-radius: 0 10px;
+      }
+    }
+  }
+}
+
+.mat-form-field,
+.mat-flat-button,
+.mat-spinner {
+  margin: 5px !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+}
+
+.mat-form-field {
+  display: block !important;
+}

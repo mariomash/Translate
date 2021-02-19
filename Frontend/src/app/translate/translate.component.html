@@ -1,0 +1,66 @@
+<mat-spinner
+  *ngIf="isLoading"
+  class="main-spinner"
+  [diameter]="50"
+></mat-spinner>
+<div class="main-translator-form" *ngIf="!isLoading">
+  <h1>Translator 3000</h1>
+  <form [formGroup]="formGroupBasic" (ngSubmit)="onFormSubmit()">
+    <div class="translate-items">
+      <div class="translate-item">
+        <h2>Translate From</h2>
+        <mat-form-field appearance="fill">
+          <mat-label>Write text to translate</mat-label>
+          <textarea
+            matInput
+            formControlName="Text"
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="8"
+          ></textarea>
+        </mat-form-field>
+      </div>
+      <div class="translate-item">
+        <h2>Translate To</h2>
+        <mat-form-field>
+          <mat-label>Language...</mat-label>
+          <mat-select formControlName="LanguageTo">
+            <mat-option
+              *ngFor="let language of availableLanguages"
+              [value]="language"
+              >{{ languageTranslations[language].translation }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field
+          appearance="fill"
+          *ngIf="formGroupBasic.get('Result')?.value !== null"
+        >
+          <mat-label>Translated text...</mat-label>
+          <textarea
+            matInput
+            formControlName="Result"
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="8"
+          ></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+    <div>
+      <button
+        type="submit"
+        color="primary"
+        [disabled]="!formGroupBasic.valid || isSaving"
+        mat-flat-button
+      >
+        <mat-icon>g_translate</mat-icon> translate
+      </button>
+      <mat-spinner
+        *ngIf="isSaving"
+        [diameter]="30"
+        class="spinner-next-to-button"
+      ></mat-spinner>
+    </div>
+  </form>
+</div>
