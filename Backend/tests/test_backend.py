@@ -1,16 +1,8 @@
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from starlette.status import HTTP_404_NOT_FOUND, HTTP_422_UNPROCESSABLE_ENTITY
-import json
-
 
 from backend.main import app
-
-from backend.config import ALLOWED_LANGUAGES, MAX_TEXT_LENGTH
-
-from backend.models.api import (
-    TranslationResponse
-)
 
 client = TestClient(app)
 
