@@ -7,13 +7,10 @@ from pydantic import BaseModel
 
 from backend import config
 from backend.models.api import (
-    TranslationResponse
+    TranslationResponse,
+    TranslationRequest
 )
 from backend.config import ALLOWED_LANGUAGES, MAX_TEXT_LENGTH
-
-class TranslationRequest(BaseModel):
-    lang: str
-    text: str
 
 router = APIRouter()
 
