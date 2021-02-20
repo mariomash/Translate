@@ -29,14 +29,6 @@ h2 {
   text-transform: uppercase;
 }
 
-app-translate {
-  display: flex;
-  align-items: center;
-  vertical-align: middle;
-  text-align: center;
-  justify-content: center;
-}
-
 .main-translator-form {
   display: flex;
   flex-wrap: wrap;
@@ -45,6 +37,10 @@ app-translate {
   width: 100%;
   form {
     width: 100%;
+    .translate-action {
+      display: flex;
+      justify-content: center;
+    }
     .translate-items {
       display: flex;
       flex-wrap: wrap;
@@ -58,6 +54,14 @@ app-translate {
         margin: 10px;
         padding: 10px;
         border-radius: 0 10px;
+      }
+      .translate-item.max-width {
+        max-width: 100%;
+        width: auto;
+        min-width: 400px;
+      }
+      .result-item {
+        text-align: justify;
       }
     }
   }

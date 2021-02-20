@@ -6,10 +6,10 @@ import { Router } from '@angular/router';
 import { forkJoin, Subscription } from 'rxjs';
 import { ApiService } from '../api.service';
 import { MyErrorStateMatcher } from '../MyErrorStateMatcher';
-
-interface ILanguageTranslation {
-  translation: string;
-}
+import { ILanguageTranslation } from '../ILanguageTranslation';
+import * as Sentry from '@sentry/browser';
+import { TranslationResponse } from './TranslationResponse';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-translate',
@@ -21,6 +21,10 @@ export class TranslateComponent implements OnInit, OnDestroy {
   isLoading = true;
   isSaving = false;
 
+  public MaxCharsForTranslation = 4000;
+
+  public TranslatedText: string = '';
+
   public availableLanguages: Array<string> = new Array<string>();
   public formGroupBasic: FormGroup;
 
@@ -31,7 +35,9 @@ export class TranslateComponent implements OnInit, OnDestroy {
   public languageTranslations: { [id: string]: ILanguageTranslation; } = {
     "es": { translation: "Español" },
     "en": { translation: "English" },
-    "de": { translation: "Deutsche" }
+    "de": { translation: "Deutsche" },
+    "pt": { translation: "Português" },
+    "fr": { translation: "Français" }
  };
 
   constructor(
@@ -54,86 +60,48 @@ export class TranslateComponent implements OnInit, OnDestroy {
   }
 
   resetValues(): void {
+    this.TranslatedText = '';
     this.availableLanguages = [
       "en",
       "es",
       "de"
     ];
     this.formGroupBasic = this.formBuilder.group({
-      LanguageTo: [null,
+      lang: [null,
         Validators.compose([
           Validators.required
         ])],
-      Text: [null,
+      text: [null,
         Validators.compose([
           Validators.required,
           Validators.minLength(1),
-          Validators.maxLength(4000)
-        ])],
-      Result: [{ value: null, disabled: true },
-          Validators.compose([
-            Validators.required,
-            Validators.minLength(1),
-            Validators.maxLength(4000)
-          ])]
+          Validators.maxLength(this.MaxCharsForTranslation)
+        ])]
     });
   }
 
   onFormSubmit(): void {
     this.isSaving = true;
-/*
-    const validationResult = new ValidationResult({
-      Id: this.validationResult.Id,
-      Name: this.formGroupBasic.get('Name').value,
-      Description: this.formGroupBasic.get('Description').value,
-      Color: this.formGroupBasic.get('Color').value,
-      Disabled: this.formGroupBasic.get('Disabled').value
-    });
-
     this.subscription.add(
-      this.apiService.saveValidationResult(validationResult).subscribe(
+      this.apiService.translateText(this.formGroupBasic.value).subscribe(
         (result) => {
           this.isSaving = false;
-          this.changeDetectorRef.detectChanges();
           if (result === undefined || result === null) {
-            this.matDialog.open(DialogSimpleComponent, {
-              data: {
-                Title: 'Error',
-                Description:
-                  'There was an error saving the validation result. Please try again and contact us if neccessary',
-                ShowCancelButton: false,
-                ShowDontShowAgainButton: false
-              }
-            });
+            alert("There was an error translating the test.");
           } else {
-            const dialogRef = this.matDialog.open(DialogSimpleComponent, {
-              data: {
-                Title: 'Information',
-                Description: `Validation Result saved successfully.`,
-                ShowCancelButton: false,
-                ShowDontShowAgainButton: false
-              }
-            });
-
-            dialogRef.afterClosed().subscribe(async () => {
-              // this.router.navigate(['/forms']);
-              this.router.navigate(['/admin/settings']);
-            });
+            var translationResponse = result as TranslationResponse;
+            this.TranslatedText = translationResponse.translated_text;
           }
         },
         (err: any) => {
           Sentry.captureMessage(JSON.stringify(err), Sentry.Severity.Error);
-          if (
-            environment.production === false &&
-            environment.debugLog === true
-          ) {
-            console.log(err);
-          }
+          alert("There was an error translating the test.");
+          console.log(err);
           this.isSaving = false;
         }
       )
     );
-  */
+
   }
 
   private getData() {
