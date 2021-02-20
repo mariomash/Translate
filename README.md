@@ -2,6 +2,10 @@
 
 Just a simple translation Demo: Python + Angular
 
+# Requisites
+- Docker
+- Docker Composer
+
 # HOW TO RUN THE BACKEND
 
 ```
