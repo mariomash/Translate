@@ -22,32 +22,6 @@ def translate(translationRequest: TranslationRequest):
 # with POST requests
 #def translate(lang: str, text: str = Query(..., min_length=1, max_length=MAX_TEXT_LENGTH)):
 
-    if translationRequest.lang not in ALLOWED_LANGUAGES:
-        msg = f"Language is not valid, must be one of {ALLOWED_LANGUAGES}"
-        logger.error(msg)
-        raise HTTPException(
-            status_code=400,
-            detail={
-                "msg": msg
-            },
-        )
-
-    if translationRequest.text.strip() == "":
-        msg = f"Text cannot be empty"
-        logger.error(msg)
-        raise HTTPException(
-            status_code=400,
-            detail={"msg": msg},
-        )
-
-    if len(translationRequest.text) > MAX_TEXT_LENGTH:
-        msg = f"Text cannot be more than {MAX_TEXT_LENGTH} chars"
-        logger.error(msg)
-        raise HTTPException(
-            status_code=400,
-            detail={"msg": msg},
-        )
-
     translated_text = translation.translate(translationRequest.text.strip(), translationRequest.lang)
 
     return TranslationResponse(
