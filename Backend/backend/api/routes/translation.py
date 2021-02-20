@@ -22,10 +22,14 @@ def translate(translationRequest: TranslationRequest):
 # with POST requests
 #def translate(lang: str, text: str = Query(..., min_length=1, max_length=MAX_TEXT_LENGTH)):
 
-    translated_text = translation.translate(translationRequest.text.strip(), translationRequest.lang)
+    translated_text = translation.translate(
+        translationRequest.text.strip(),
+        translationRequest.lang_src,
+        translationRequest.lang_tgt)
 
     return TranslationResponse(
-        lang = translationRequest.lang,
+        lang_src = translationRequest.lang_src,
+        lang_tgt = translationRequest.lang_tgt,
         text = translationRequest.text,
         translated_text = translated_text
     )

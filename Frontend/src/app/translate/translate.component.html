@@ -9,6 +9,16 @@
     <div class="translate-items">
       <div class="translate-item">
         <h2>Translate From</h2>
+        <mat-form-field>
+          <mat-label>Language...</mat-label>
+          <mat-select formControlName="lang_src">
+            <mat-option
+              *ngFor="let language of availableLanguages"
+              [value]="language"
+              >{{ languageTranslations[language].translation }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Write text to translate</mat-label>
           <textarea
@@ -31,7 +41,7 @@
         <h2>Translate To</h2>
         <mat-form-field>
           <mat-label>Language...</mat-label>
-          <mat-select formControlName="lang">
+          <mat-select formControlName="lang_tgt">
             <mat-option
               *ngFor="let language of availableLanguages"
               [value]="language"

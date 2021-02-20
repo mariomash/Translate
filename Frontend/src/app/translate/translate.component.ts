@@ -67,7 +67,11 @@ export class TranslateComponent implements OnInit, OnDestroy {
       "de"
     ];
     this.formGroupBasic = this.formBuilder.group({
-      lang: [null,
+      lang_src: [null,
+        Validators.compose([
+          Validators.required
+        ])],
+      lang_tgt: [null,
         Validators.compose([
           Validators.required
         ])],

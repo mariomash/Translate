@@ -21,12 +21,18 @@ def test_wrong_path():
     response = client.get("/wrong/path")
     assert response.status_code == HTTP_404_NOT_FOUND
 
-def test_wrong_lang_in_translation():
-    data = {"lang": "wrong", "text": "right"}
+def test_wrong_lang_src_in_translation():
+    data = {"lang_src": "wrong", "lang_tgt": "en", "text": "right"}
     response = client.post(
         "/api/translation/translate",
         json=data)
-    print(response.status_code)
+    assert response.status_code == HTTP_422_UNPROCESSABLE_ENTITY
+
+def test_wrong_lang_tgt_in_translation():
+    data = {"lang_src": "en", "lang_tgt": "wrong", "text": "right"}
+    response = client.post(
+        "/api/translation/translate",
+        json=data)
     assert response.status_code == HTTP_422_UNPROCESSABLE_ENTITY
 
 def test_empty_text_in_translation():
@@ -34,7 +40,6 @@ def test_empty_text_in_translation():
     response = client.post(
         "/api/translation/translate",
         json=data)
-    print(response.status_code)
     assert response.status_code == HTTP_422_UNPROCESSABLE_ENTITY
 
 def test_long_text_in_translation():
@@ -42,5 +47,4 @@ def test_long_text_in_translation():
     response = client.post(
         "/api/translation/translate",
         json=data)
-    print(response.status_code)
     assert response.status_code == HTTP_422_UNPROCESSABLE_ENTITY

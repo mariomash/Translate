@@ -61,7 +61,7 @@ export class ApiService {
       );
     }
 
-    public translateText(formData: FormData): Observable<TranslationResponse | HttpErrorResponse> {
+    public translateText(formData: FormData): Observable<TranslationResponse> {
       const url = `${environment.apiUrl}/translation/translate/`;
       return this.httpClient.post(url, formData).pipe(
         retry(3),

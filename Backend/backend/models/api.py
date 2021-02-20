@@ -3,19 +3,27 @@ from backend.config import ALLOWED_LANGUAGES, MAX_TEXT_LENGTH
 
 
 class TranslationResponse(BaseModel):
-    lang: str
+    lang_src: str
+    lang_tgt: str
     text: str
     translated_text: str
 
 
 class TranslationRequest(BaseModel):
-    lang: str
+    lang_src: str
+    lang_tgt: str
     text: str
 
-    @validator("lang")
-    def lang_must_be_in_list(cls, value):
+    @validator("lang_src")
+    def lang_src_must_be_in_list(cls, value):
         if value not in ALLOWED_LANGUAGES:
-            raise ValueError(f"lang is not valid, must be one of {ALLOWED_LANGUAGES}")
+            raise ValueError(f"lang_src is not valid, must be one of {ALLOWED_LANGUAGES}")
+        return value.title()
+
+    @validator("lang_tgt")
+    def lang_tgt_must_be_in_list(cls, value):
+        if value not in ALLOWED_LANGUAGES:
+            raise ValueError(f"lang_tgt is not valid, must be one of {ALLOWED_LANGUAGES}")
         return value.title()
 
     @validator("text")
