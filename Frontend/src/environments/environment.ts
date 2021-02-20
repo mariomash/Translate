@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   appName: 'Translator 3000 [dev]',
-  apiUrl: 'https://127.0.0.1:8000/api',
+  apiUrl: 'http://127.0.0.1:8000/api',
 };
 
 /*

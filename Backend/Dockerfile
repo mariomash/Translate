@@ -16,4 +16,6 @@ RUN pip install poetry==1.1 && \
 
 COPY . ./
 
-CMD poetry run uvicorn --host=0.0.0.0 backend.main:app --reload --ssl-keyfile=./localhost+2-key.pem --ssl-certfile=./localhost+2.pem
+# CMD poetry run uvicorn --host=0.0.0.0 backend.main:app --ssl-keyfile=./localhost+2-key.pem --ssl-certfile=./localhost+2.pem
+
+CMD poetry run uvicorn --host=0.0.0.0 backend.main:app
