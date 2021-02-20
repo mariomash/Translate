@@ -10,6 +10,7 @@ import { ILanguageTranslation } from '../ILanguageTranslation';
 import * as Sentry from '@sentry/browser';
 import { TranslationResponse } from './TranslationResponse';
 import { HttpErrorResponse } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-translate',
@@ -61,11 +62,7 @@ export class TranslateComponent implements OnInit, OnDestroy {
 
   resetValues(): void {
     this.TranslatedText = '';
-    this.availableLanguages = [
-      "en",
-      "es",
-      "de"
-    ];
+    this.availableLanguages = [];
     this.formGroupBasic = this.formBuilder.group({
       lang_src: [null,
         Validators.compose([
@@ -116,9 +113,11 @@ export class TranslateComponent implements OnInit, OnDestroy {
       availableLanguages$,
     ]).subscribe(
       ([availableLanguages]) => {
-        if (availableLanguages !== undefined && availableLanguages !== null) {
-          this.availableLanguages = availableLanguages;
+        if (availableLanguages === undefined || availableLanguages === null) {
+          alert(`There was an error connecting with the backend...\nThis won\'t work until API is running on ${environment.apiUrl}.`);
+          return;
         }
+        this.availableLanguages = availableLanguages;
         this.isLoading = false;
       },
       (err) => {
