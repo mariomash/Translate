@@ -19,3 +19,6 @@ docker-compose up -d
 cd Frontend
 docker-compose up -d
 ```
+
+# HOW TO USE THE APP
+access http://localhost
